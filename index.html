@@ -6,67 +6,96 @@
 <title>Eternity — Growth Elevation</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --muted: #6b7280;
+    --text: #07101a;
+    --accent: #00c08b;
+    --accent-2: #00e6b3;
+  }
   html { scroll-behavior: smooth; }
-  body { margin: 0; font-family: 'Inter', sans-serif; background-color: #fafafa; color: #111; line-height: 1.6; }
+  body { margin: 0; font-family: 'Inter', sans-serif; background-color: #fafafa; color: var(--text); line-height: 1.6; }
   header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: white; position: sticky; top: 0; border-bottom: 1px solid #eee; z-index: 1000; }
-  header h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; }
-  nav a { margin-left: 1.5rem; text-decoration: none; color: #111; font-weight: 500; }
+  header h1 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: 0.6px; }
+  nav { display: flex; align-items: center; }
+  nav a { margin-left: 1.5rem; text-decoration: none; color: var(--text); font-weight: 500; }
+  nav .cta2 { background: var(--accent); color: #021614; padding: 10px 14px; border-radius: 10px; font-weight: 700; text-decoration: none; }
+
+  /* Mobile Nav Toggle */
+  .nav-toggle { display: none; flex-direction: column; cursor: pointer; }
+  .nav-toggle span { height: 3px; width: 25px; background: #000; margin-bottom: 4px; border-radius: 3px; }
+
+  /* Sections */
   section { padding: 0rem 2rem; max-width: 1100px; margin: auto; }
   section + section { margin-top: 2rem; }
   section h2, section h3 { font-family: 'Playfair Display', serif; margin-bottom: 0.8rem; }
-  section h2 { font-size: 3.5rem; margin-top: 0; } /* Increased font size for hero heading */
+  section h2 { font-size: 3rem; margin-top: 0; }
   section h3 { font-size: 2rem; }
+
+  /* Hero */
   .hero { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; padding: 3rem 2rem; }
   .hero .content { flex: 1 1 500px; }
   .offer-side { flex: 1 1 350px; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 6px 24px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 120px; }
-.eyebrow{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-
-  .hero h2 em { font-style: italic; color: inherit; }
-  .lead { max-width: 600px; margin-top: 0.5rem; font-size:16px;color:var(--muted);max}
+  .eyebrow { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .lead { max-width: 600px; margin-top: 0.5rem; font-size: 16px; color: var(--muted); }
   .sub-lead { margin-top: 0.8rem; font-size: 1.3rem; font-weight: 600; color: #333; }
-  .cta { display: inline-block; margin-top: 1rem; padding: 0.8rem 1.6rem; background-color: #00c08b; color: white; font-weight: bold; border-radius: 6px; text-decoration: none; transition: all 0.2s ease; }
-  .cta:hover { background-color: #00c08b; transform: translateY(-2px); }
-  .btn-ghost { display: inline-block; margin-left: 1rem; margin-top: 1rem; padding: 0.8rem 1.6rem; border: 2px solid #00c08b; color: #00c08b; font-weight: bold; border-radius: 6px; text-decoration: none; transition: all 0.2s ease; }
-  .btn-ghost:hover { background-color: #00c08b; color: white; }
+  .cta { display: inline-block; margin-top: 1rem; padding: 0.8rem 1.6rem; background-color: var(--accent); color: white; font-weight: bold; border-radius: 6px; text-decoration: none; transition: all 0.2s ease; }
+  .cta:hover { transform: translateY(-2px); }
+  .btn-ghost { display: inline-block; margin-left: 1rem; margin-top: 1rem; padding: 0.8rem 1.6rem; border: 2px solid var(--accent); color: var(--accent); font-weight: bold; border-radius: 6px; text-decoration: none; transition: all 0.2s ease; }
+  .btn-ghost:hover { background-color: var(--accent); color: white; }
+
+  /* Cards and Grids */
   .grid-3 { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
   .card { background: white; padding: 1rem 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); flex: 1 1 200px; }
   .small-muted { font-size: 0.85rem; color: #777; }
   .industries-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem; margin-top: 1rem; }
   .industry-card { background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); text-align: center; font-weight: 500; }
   .industry-card p { margin-top: 0.5rem; font-size: 0.9rem; color: #555; }
-  .timeline { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem; }
-  .timeline-item { border-left: 0px solid #00c46a; padding-left: 0rem; font-weight: 500; color: #333; }
-  .timeline-item strong { font-weight: 600; color: black; }
-  .contact-form, form { display: flex; flex-direction: column; gap: 0.8rem; max-width: 700px; }
-  .contact-form input, .contact-form textarea, form input, form textarea { padding: 0.8rem; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; width: 100%; }
-  .contact-form button, form button { padding: 0.8rem; border-radius: 6px; border: none; background-color: #00c46a; color: white; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.2s ease; }
-  .contact-form button:hover, form button:hover { background-color: #00b35a; transform: translateY(-1px); }
-  .floating-cta { position: fixed; bottom: 20px; right: 20px; background: #00c08b; color: white; padding: 1rem 1.5rem; border-radius: 50px; font-weight: bold; text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,0.2); z-index: 999; transition: all 0.2s ease; }
-  .floating-cta:hover { background: #00b35a; transform: translateY(-2px); }
+
+  /* Cases */
   .cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 1rem; margin-top: 1rem; }
   .case-card { background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-  dl.faq { max-width: 700px; margin-top: 1rem; }
-  dl.faq dt { font-weight: 600; margin-top: 1rem; cursor: pointer; }
-  dl.faq dd { margin: 0.5rem 0 1rem 1rem; color: #555; display: none; }
-  footer{margin-top:34px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:center;padding-top:14px; padding-left: 3em; padding-right: 3em;padding-bottom: 3em;}
-  .cta2{background:var(--accent);color:#021614;padding:10px 14px;border-radius:10px;font-weight:700;text-decoration:none}
-  :root{
- 
-  --muted:#6b7280;
-  --text:#07101a;
-  --accent:#00c08b;
-  --accent-2:#00e6b3;
- 
-}
+
+  /* Form */
+  form { display: flex; flex-direction: column; gap: 0.8rem; max-width: 700px; }
+  input, textarea { padding: 0.8rem; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; width: 100%; }
+  button { padding: 0.8rem; border-radius: 6px; border: none; background-color: var(--accent); color: white; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.2s ease; }
+  button:hover { background-color: #00b35a; transform: translateY(-1px); }
+
+  /* Footer */
+  footer { margin-top: 34px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; align-items: center; padding: 14px 3em; flex-wrap: wrap; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { 
+      display: none; 
+      flex-direction: column; 
+      background: white; 
+      position: absolute; 
+      top: 60px; 
+      right: 0; 
+      width: 100%; 
+      border-top: 1px solid #eee; 
+      padding: 1rem 0;
+    }
+    nav.active { display: flex; }
+    nav a { margin: 0.5rem 1rem; }
+    .nav-toggle { display: flex; }
+    .hero { flex-direction: column; padding: 2rem 1rem; }
+    .offer-side { position: static; }
+    section h2 { font-size: 2rem; }
+    section h3 { font-size: 1.5rem; }
+    footer { flex-direction: column; text-align: center; gap: 0.5rem; }
+  }
 </style>
 </head>
 <body>
 
-<header style="padding-right: 3em; padding-left: 3em;">
-  <h1 style="font-weight: 800;
-    font-size: 22px;
-    letter-spacing: 0.6px;font-family: Inter,system-ui,Arial,sans-serif;">Eternity</h1>
-  <nav>
+<header>
+  <h1>Eternity</h1>
+  <div class="nav-toggle" id="nav-toggle">
+    <span></span><span></span><span></span>
+  </div>
+  <nav id="nav">
     <a href="#services">Services</a>
     <a href="#industries">Industries</a>
     <a href="#cases">Cases</a>
@@ -76,6 +105,7 @@
   </nav>
 </header>
 
+<!-- Your sections here (unchanged from your original code) -->
 <section class="hero">
   <div class="content">
     <div class="eyebrow">B2B Growth & Commerce</div>
@@ -290,16 +320,17 @@ Operations flow chart, Internal managemet software set up, tasks management<br><
   <p class="small-muted">Email: <a href="mailto:orlandoperflo@gmail.com">orlandoperflo@gmail.com</a></p>
   <p class="small-muted">Phone: +52 999 342 2063</p>
 </section>
-
-
 <footer>
-    <div><strong>Eternity</strong> · AI-driven growth & commerce</div>
-    <div>© Eternity — Built for ambitious brands · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
-  </footer>
-
-<a href="#contact" style="display: none;" class="floating-cta">Apply Now</a>
+  <div><strong>Eternity</strong> · AI-driven growth & commerce</div>
+  <div>© Eternity — Built for ambitious brands · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
+</footer>
 
 <script>
+  // Mobile nav toggle
+  document.getElementById('nav-toggle').addEventListener('click', function() {
+    document.getElementById('nav').classList.toggle('active');
+  });
+
   // FAQ toggle
   document.querySelectorAll('.faq dt').forEach(dt => {
     dt.addEventListener('click', () => {
