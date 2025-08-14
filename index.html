@@ -17,8 +17,9 @@
   header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: white; position: sticky; top: 0; border-bottom: 1px solid #eee; z-index: 1000; }
   header h1 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: 0.6px; }
   nav { display: flex; align-items: center; }
-  nav a { margin-left: 1.5rem; text-decoration: none; color: var(--text); font-weight: 500; }
+  nav a { margin-left: 1.1rem; text-decoration: none; color: var(--text); font-weight: 500; }
   nav .cta2 { background: var(--accent); color: #021614; padding: 10px 14px; border-radius: 10px; font-weight: 700; text-decoration: none; }
+  .nav a.active { color: var(--accent); }
 
   /* Mobile Nav Toggle */
   .nav-toggle { display: none; flex-direction: column; cursor: pointer; }
@@ -54,35 +55,29 @@
   /* Cases */
   .cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 1rem; margin-top: 1rem; }
   .case-card { background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-/* Add this to your existing styles */
-.faq dd {
-  display: none;
-  margin: 0 0 1rem;
-  padding-left: 1rem;
-  color: #555;
-}
-.faq dt {
-  cursor: pointer;
-  font-weight: bold;
-  margin-top: 1rem;
-  position: relative;
-}
-.faq dt::after {
-  content: '+';
-  position: absolute;
-  right: 0;
-}
-.faq dt.active::after {
-  content: '-';
-}
+
+  /* FAQ */
+  .faq dd { display: none; margin: 0 0 1rem; padding-left: 1rem; color: #555; }
+  .faq dt { cursor: pointer; font-weight: bold; margin-top: 1rem; position: relative; }
+  .faq dt::after { content: '+'; position: absolute; right: 0; }
+  .faq dt.active::after { content: '-'; }
+
   /* Form */
   form { display: flex; flex-direction: column; gap: 0.8rem; max-width: 700px; }
-  input, textarea { padding: 0.8rem; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; width: 100%; }
+  input, textarea, select { padding: 0.8rem; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; width: 100%; }
   button { padding: 0.8rem; border-radius: 6px; border: none; background-color: var(--accent); color: white; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.2s ease; }
   button:hover { background-color: #00b35a; transform: translateY(-1px); }
 
   /* Footer */
   footer { margin-top: 34px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; align-items: center; padding: 14px 3em; flex-wrap: wrap; }
+
+  /* Pills */
+  .pills { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.5rem; }
+  .pill { background:white; border:1px solid #e5e7eb; border-radius:999px; padding:.35rem .7rem; font-size:.85rem; }
+
+  /* RE Hero */
+  .re-hero { padding: 3rem 2rem; display:grid; gap:0rem; }
+  .muted { color: var(--muted); }
 
   /* Responsive */
   @media (max-width: 768px) {
@@ -102,268 +97,443 @@
     .nav-toggle { display: flex; }
     .hero { flex-direction: column; padding: 2rem 1rem; }
     .offer-side { position: static; }
-    section h2 { font-size: 3rem; }
+    section h2 { font-size: 2rem; }
     section h3 { font-size: 1.5rem; }
     footer { flex-direction: column; text-align: center; gap: 0.5rem; }
   }
 </style>
 </head>
 <body>
-
 <header>
   <h1>Eternity</h1>
-  <div class="nav-toggle" id="nav-toggle">
-    <span></span><span></span><span></span>
-  </div>
-  <nav id="nav">
-    <a href="#services">Services</a>
-    <a href="#industries">Industries</a>
-    <a href="#cases">Cases</a>
-    <a href="#faq">FAQ</a>
-    <a href="#contactme">Contact</a>
-    <a class="cta2" href="#contact">Apply</a>
+  <div class="nav-toggle" id="nav-toggle"><span></span><span></span><span></span></div>
+  <nav id="nav" class="nav">
+    <a href="#/" data-route>Home</a>
+    <a href="#/real-estate" data-route>Real Estate</a>
+    <a href="#/services" data-scroll="#services">Services</a>
+    <a href="#/industries" data-scroll="#industries">Industries</a>
+    <a href="#/cases" data-scroll="#cases">Cases</a>
+    <a href="#/faq" data-scroll="#faq">FAQ</a>
+    <a href="#/contact" data-scroll="#contact">Contact</a>
+    <a class="cta2" href="#/apply" data-scroll="#contact">Apply</a>
   </nav>
 </header>
 
-<!-- Your sections here (unchanged from your original code) -->
-<section class="hero">
-  <div class="content">
-    <div class="eyebrow">B2B Growth & Commerce</div>
-    <h2 style="line-height: 100%;">We build <em>high‑performing</em> growth systems for visionary brands</h2>
-    <p class="lead">Eternity designes, optimizes, and scales predictable growth engines that combines AI, automation, and senior-level execution to unlock growth potential, reduce friction, and maximize ROI across marketing, sales, and operations to grow with precision.</p>
-    <div class="sub-lead">Ready to scale? Let’s design your systems.</div>
-    <a href="#contact" class="cta">Apply for Growth Elevation</a>
-    <a href="#services" class="btn-ghost">Request free audit</a>
+<main id="app">
+  <!-- HOME CONTENT (initial render) -->
+  <section class="hero">
+    <div class="content">
+      <div class="eyebrow">B2B Growth & Commerce</div>
+      <h2 style="line-height: 100%;">We build <em>high‑performing</em> growth systems for visionary brands</h2>
+      <p class="lead">Eternity designes, optimizes, and scales predictable growth engines that combines AI, automation, and senior-level execution to unlock growth potential, reduce friction, and maximize ROI across marketing, sales, and operations to grow with precision.</p>
+      <div class="sub-lead">Ready to scale? Let’s design your systems.</div>
+      <a href="#/apply" data-scroll="#contact" class="cta">Apply for Growth Elevation</a>
+      <a href="#/services" data-scroll="#services" class="btn-ghost">Request free audit</a>
 
-    <div class="grid-3">
-      <div class="card"><strong>220% increase in qualified leads</strong><br/><span class="small-muted">Demand gen overhaul + creative experiments for a mid-market beauty brand.</span></div>
-      <div class="card"><strong>3X customer LTV</strong><br/><span class="small-muted">Lifecycle automation & retention systems for a D2C food brand.</span></div>
-      <div class="card"><strong>70% fewer stockouts</strong><br/><span class="small-muted">Inventory orchestration and marketplace sync for a multi-channel retailer.</span></div>
+      <div class="grid-3">
+        <div class="card"><strong>220% increase in qualified leads</strong><br/><span class="small-muted">Demand gen overhaul + creative experiments for a mid-market beauty brand.</span></div>
+        <div class="card"><strong>3X customer LTV</strong><br/><span class="small-muted">Lifecycle automation & retention systems for a D2C food brand.</span></div>
+        <div class="card"><strong>70% fewer stockouts</strong><br/><span class="small-muted">Inventory orchestration and marketplace sync for a multi-channel retailer.</span></div>
+      </div>
     </div>
-  </div>
 
-  <div class="offer-side">
-    <span style="margin-top: 0; text-align: center;display: flex;
-    margin-top: 0;
-    text-align: center;
-    flex-direction: column; "><h2 style="line-height: 100%; font-size: 40px ;margin-bottom:0px;">Growth Elevation</h2>  <span class="eyebrow">ELITE PROGRAM</span></span>
-    <p>We architect, integrate, and operate full-stack growth systems that deliver measurable ROI. Your brand receives AI-driven marketing strategies, automated operations, and hands-on senior leadership from experts who’ve scaled global brands.</p>
-    <p>We align risk and reward — you pay only when pre-agreed KPIs are met. Fast integration, strategic oversight, and repeatable, scalable growth. This is how top brands dominate markets.</p>
-    <p><strong>Pricing:</strong> $7,500 setup + $7,500/month retainer + 10% performance fee on uplift (full payment only upon KPI achievement)</p>
-    <div class="timeline">
-      <div class="timeline-item"><strong>Week 1:</strong> Audit & Quick Wins</div>
-      <div class="timeline-item"><strong>Week 2-3:</strong> Integration & Execution</div>
-      <div class="timeline-item"><strong>Week 4-5:</strong> Optimization & Measurement</div>
-      <div class="timeline-item"><strong>Week 6:</strong> Deliver repeatable growth engine</div>
+    <div class="offer-side">
+      <span style="margin-top: 0; text-align: center;display: flex; flex-direction: column; "><h2 style="line-height: 100%; font-size: 40px ;margin-bottom:0px;">Growth Elevation</h2>  <span class="eyebrow">ELITE PROGRAM</span></span>
+      <p>We architect, integrate, and operate full-stack growth systems that deliver measurable ROI. Your brand receives AI-driven marketing strategies, automated operations, and hands-on senior leadership from experts who’ve scaled global brands.</p>
+      <p>We align risk and reward — you pay only when pre-agreed KPIs are met. Fast integration, strategic oversight, and repeatable, scalable growth. This is how top brands dominate markets.</p>
+      <p><strong>Pricing:</strong> $7,500 setup + $7,500/month retainer + 10% performance fee on uplift (full payment only upon KPI achievement)</p>
+      <div class="timeline">
+        <div class="timeline-item"><strong>Week 1:</strong> Audit & Quick Wins</div>
+        <div class="timeline-item"><strong>Week 2-3:</strong> Integration & Execution</div>
+        <div class="timeline-item"><strong>Week 4-5:</strong> Optimization & Measurement</div>
+        <div class="timeline-item"><strong>Week 6:</strong> Deliver repeatable growth engine</div>
+      </div>
+      <a href="#/apply" data-scroll="#contact" class="cta">Apply & Book a Strategy Call</a>
     </div>
-    <a href="#contact" class="cta">Apply & Book a Strategy Call</a>
-  </div>
-</section>
+  </section>
 
-<section id="fast-integration">
-  <h3>Fast Integrations. Clear Results. No Guesswork.</h3>
-  <p>Our systems integrate with your existing platforms, ad accounts, marketplaces, and fulfillment pipelines in record time, delivering meaningful results without disruption. The best tech and business strategies</p>
-</section>
+  <section id="fast-integration">
+    <h3>Fast Integrations. Clear Results. No Guesswork.</h3>
+    <p>Our systems integrate with your existing platforms, ad accounts, marketplaces, and fulfillment pipelines in record time, delivering meaningful results without disruption. The best tech and business strategies</p>
+  </section>
 
+  <section id="team">
+    <h3>Team & Advisors</h3>
+    <p>Founders + senior engineers + growth leads — dedicated to building, executing, and scaling your growth engine with precision and speed.</p>
+  </section>
 
-<section id="team">
-  <h3>Team & Advisors</h3>
-  <p>Founders + senior engineers + growth leads — dedicated to building, executing, and scaling your growth engine with precision and speed.</p>
-</section>
-
-<section id="services">
-  <h3>Our Services</h3>
-  <div class="industries-grid">
-
-    <div class="industry-card"><strong>AI-Engineering</strong><p>AI-Agents, GPT Company Brain, Automated campaigns, predictive targeting, and real-time optimization to scale growth.</p></div>
-    <div class="industry-card"><strong>Full-Stack Automation</strong><p>Integrate marketing, sales, inventory, and fulfillment for a frictionless growth engine.</p></div>
-    <div class="industry-card"><strong>E-commerce & Lightning-Speed Websites</strong><p>Full-stack, high-performance websites built with the best tech stack for every business type, optimized for conversions and speed.</p></div>
-    <div class="industry-card"><strong>Marketplace Management</strong><p>Amazon, Walmart, Mercado Libre, and multi-channel marketplace integration, inventory sync, and listing optimization.</p></div>
-    <div class="industry-card"><strong>Retention & Lifecycle</strong><p>Customer journey automation, loyalty strategies, and lifecycle email/SMS flows to maximize LTV.</p></div>
-    <div class="industry-card"><strong>Strategic Oversight</strong><p>Senior leadership guidance, KPI alignment, and actionable growth roadmaps tailored for your brand.</p></div>
-  </div>
-   <div class="eyebrow"><br>
-<br>
-
-<strong>FULL STACK WEB DEVELOPMENT</strong><br>
-
-react js, java, php, sql database, wordpress fast, secure, state of the art <br><br>
-
-<strong>WEB APPS WITH PAYMENT PROCCESORS</strong><br><br>
-
-<strong>AI DEVELOPMENT</strong><br>
-AI Customer Service, LLM Traning, Advanced Chat Bots, AI AGENTS<br><br>
-
-<strong>QUALIFIED LEAD GEN</strong><br><br>
-
-<strong>AMAZON FBA, WALMART WF</strong>S<br>
-AMAZON SELLER, WALMART SELLER<br><br>
-
-<strong>ECOMMERCE & DSD</strong><br><br>
-
-<strong>CRM SOFTWARE MANAGEMENT</strong><br>
-CRM, EMAIL FLOW AUTOMATIONS<br><br>
-
-<strong>META ADS, GOOGLE ADS, TIKTOK ADS</strong><br>
-Advanced campaign management, reporting, Advanced Audience Targeting, ROI/Budget optimization<br><br>
-
-<strong>WHATSAPP BUSINESS CLOUD API</strong><br><br>
-
-<strong>SOCIAL MEDIA GROWTH</strong> <br><br>
-
-<strong>N8N, ZAPIER AND MAKE AUTOMATIONS</strong><br><br>
-
-<strong>DEEP LEARNING / DATA SCIENCE</strong><br><br>
-
-<strong>COMPANY OPERATIONS</strong><br>
-Operations flow chart, Internal managemet software set up, tasks management<br><br>
-
-<strong>CLICK UP MANAGEMENT & PROGRAMING</strong><br><br>
-
-<strong>UX / UI</strong><br>
-
-</div>
-</section>
-
- <!-- DELIVERABLES & WHO -->
-    <section id="deliverables" aria-labelledby="deliverables-title">
-      <h3 id="deliverables-title">What You Get — Deliverables</h3>
-      <p>We provide a high-impact, focused Growth Sprint designed to fix bottlenecks and build a repeatable growth engine.</p>
-      <ul class="features-list" aria-label="Deliverables list">
-        <li>Full technical & media audit (7 days)</li>
-        <li>Integrations: Shopify / Amazon / Walmart / CRM / Ads / Payments / 3PL (setup in 7–14 days)</li>
-        <li>AI-driven ad creative & bid optimization (live tests)</li>
-        <li>Marketplace listing optimization & feed automation</li>
-        <li>CRM flows (email, SMS, WhatsApp) and retargeting sequences</li>
-        <li>Weekly dashboard, daily ops, and a dedicated senior growth lead</li>
-        <li>Clear KPI contract and performance-based fee structure</li>
-        <li>KPI Growth Dashboard</li>
-      </ul>
-
-      <h3>Who This Is For</h3>
-      <p>D2C, B2B & marketplace brands doing $1M–$50M ARR, already running ads and selling on Shopify, Amazon, or Walmart, and ready to scale with a tech-first partner.</p>
-    </section>
-
-<section id="industries">
-  <h3>Industries We Serve</h3>
-  <div class="industries-grid">
-    <div class="industry-card"><strong>Beauty & Wellness</strong><p>Laser-targeted campaigns for D2C and retail brands looking to optimize customer acquisition, retention, and LTV.</p></div>
-    <div class="industry-card"><strong>Food & Beverage</strong><p>Precision growth systems for D2C, restaurant chains, and multi-channel brands aiming for scalable growth.</p></div>
-    <div class="industry-card"><strong>Retail & eCommerce</strong><p>Automated marketplace and inventory orchestration to maximize conversions and repeat purchases.</p></div>
-    <div class="industry-card"><strong>Tech & SaaS</strong><p>Data-driven adoption and revenue growth for software, subscription, and app-based brands.</p></div>
-    <div class="industry-card"><strong>Real Estate</strong><p>Lead generation automation and high-value prospect nurturing for developers, agencies, and platforms.</p></div>
-    <div class="industry-card"><strong>Health & Fitness</strong><p>Member acquisition, retention, and scalable growth for gyms, wellness apps, and health tech.</p></div>
-    <div class="industry-card"><strong>Luxury & Lifestyle</strong><p>Premium customer acquisition and retention strategies for high-end brands.</p></div>
-  </div>
-</section>
-
-<section id="cases">
-  <h3>Case Studies</h3>
-  <div class="cases-grid">
-    <div class="case-card">
-      <strong>Beauty Brand — +220% Qualified Leads</strong>
-      <p>Through demand gen overhaul and AI-driven creative experiments, we tripled lead quality within 6 weeks.</p>
+  <section id="services">
+    <h3>Our Services</h3>
+    <div class="industries-grid">
+      <div class="industry-card"><strong>AI-Engineering</strong><p>AI-Agents, GPT Company Brain, Automated campaigns, predictive targeting, and real-time optimization to scale growth.</p></div>
+      <div class="industry-card"><strong>Full-Stack Automation</strong><p>Integrate marketing, sales, inventory, and fulfillment for a frictionless growth engine.</p></div>
+      <div class="industry-card"><strong>E-commerce & Lightning-Speed Websites</strong><p>Full-stack, high-performance websites built with the best tech stack for every business type, optimized for conversions and speed.</p></div>
+      <div class="industry-card"><strong>Marketplace Management</strong><p>Amazon, Walmart, Mercado Libre, and multi-channel marketplace integration, inventory sync, and listing optimization.</p></div>
+      <div class="industry-card"><strong>Retention & Lifecycle</strong><p>Customer journey automation, loyalty strategies, and lifecycle email/SMS flows to maximize LTV.</p></div>
+      <div class="industry-card"><strong>Strategic Oversight</strong><p>Senior leadership guidance, KPI alignment, and actionable growth roadmaps tailored for your brand.</p></div>
     </div>
-    <div class="case-card">
-      <strong>D2C Food Brand — 3X LTV</strong>
-      <p>Implemented lifecycle automation & retention systems, tripling customer lifetime value in 90 days.</p>
+    <div class="eyebrow"><br><br>
+      <strong>FULL STACK WEB DEVELOPMENT</strong><br>
+      react js, java, php, sql database, wordpress fast, secure, state of the art <br><br>
+      <strong>WEB APPS WITH PAYMENT PROCCESORS</strong><br><br>
+      <strong>AI DEVELOPMENT</strong><br>
+      AI Customer Service, LLM Traning, Advanced Chat Bots, AI AGENTS<br><br>
+      <strong>QUALIFIED LEAD GEN</strong><br><br>
+      <strong>AMAZON FBA, WALMART WF</strong>S<br>
+      AMAZON SELLER, WALMART SELLER<br><br>
+      <strong>ECOMMERCE & DSD</strong><br><br>
+      <strong>CRM SOFTWARE MANAGEMENT</strong><br>
+      CRM, EMAIL FLOW AUTOMATIONS<br><br>
+      <strong>META ADS, GOOGLE ADS, TIKTOK ADS</strong><br>
+      Advanced campaign management, reporting, Advanced Audience Targeting, ROI/Budget optimization<br><br>
+      <strong>WHATSAPP BUSINESS CLOUD API</strong><br><br>
+      <strong>SOCIAL MEDIA GROWTH</strong> <br><br>
+      <strong>N8N, ZAPIER AND MAKE AUTOMATIONS</strong><br><br>
+      <strong>DEEP LEARNING / DATA SCIENCE</strong><br><br>
+      <strong>COMPANY OPERATIONS</strong><br>
+      Operations flow chart, Internal managemet software set up, tasks management<br><br>
+      <strong>CLICK UP MANAGEMENT & PROGRAMING</strong><br><br>
+      <strong>UX / UI</strong><br>
     </div>
-    <div class="case-card">
-      <strong>Multi-channel Retailer — 70% Fewer Stockouts</strong>
-      <p>Optimized inventory and marketplace sync, dramatically reducing out-of-stock occurrences and lost revenue.</p>
+  </section>
+
+  <section id="deliverables" aria-labelledby="deliverables-title">
+    <h3 id="deliverables-title">What You Get — Deliverables</h3>
+    <p>We provide a high-impact, focused Growth Sprint designed to fix bottlenecks and build a repeatable growth engine.</p>
+    <ul class="features-list" aria-label="Deliverables list">
+      <li>Full technical & media audit (7 days)</li>
+      <li>Integrations: Shopify / Amazon / Walmart / CRM / Ads / Payments / 3PL (setup in 7–14 days)</li>
+      <li>AI-driven ad creative & bid optimization (live tests)</li>
+      <li>Marketplace listing optimization & feed automation</li>
+      <li>CRM flows (email, SMS, WhatsApp) and retargeting sequences</li>
+      <li>Weekly dashboard, daily ops, and a dedicated senior growth lead</li>
+      <li>Clear KPI contract and performance-based fee structure</li>
+      <li>KPI Growth Dashboard</li>
+    </ul>
+
+    <h3>Who This Is For</h3>
+    <p>D2C, B2B & marketplace brands doing $1M–$50M ARR, already running ads and selling on Shopify, Amazon, or Walmart, and ready to scale with a tech-first partner.</p>
+  </section>
+
+  <section id="industries">
+    <h3>Industries We Serve</h3>
+    <div class="industries-grid">
+      <div class="industry-card"><strong>Beauty & Wellness</strong><p>Laser-targeted campaigns for D2C and retail brands looking to optimize customer acquisition, retention, and LTV.</p></div>
+      <div class="industry-card"><strong>Food & Beverage</strong><p>Precision growth systems for D2C, restaurant chains, and multi-channel brands aiming for scalable growth.</p></div>
+      <div class="industry-card"><strong>Retail & eCommerce</strong><p>Automated marketplace and inventory orchestration to maximize conversions and repeat purchases.</p></div>
+      <div class="industry-card"><strong>Tech & SaaS</strong><p>Data-driven adoption and revenue growth for software, subscription, and app-based brands.</p></div>
+      <div class="industry-card"><strong>Real Estate</strong><p>Lead generation automation and high-value prospect nurturing for developers, agencies, and platforms.</p></div>
+      <div class="industry-card"><strong>Health & Fitness</strong><p>Member acquisition, retention, and scalable growth for gyms, wellness apps, and health tech.</p></div>
+      <div class="industry-card"><strong>Luxury & Lifestyle</strong><p>Premium customer acquisition and retention strategies for high-end brands.</p></div>
     </div>
-  </div>
-</section>
+  </section>
 
-  <!-- ABOUT -->
-    <section id="about" aria-labelledby="about-title">
-      <h3 id="about-title">We make growth repeatable — product-first, ops-obsessed</h3>
-      <p>Eternity was born from the frustration of running successful campaigns that couldn’t scale because systems and operations were broken. We built a product that ties everything together and a delivery engine that executes it.</p>
+  <section id="cases">
+    <h3>Case Studies</h3>
+    <div class="cases-grid">
+      <div class="case-card"><strong>Beauty Brand — +220% Qualified Leads</strong><p>Through demand gen overhaul and AI-driven creative experiments, we tripled lead quality within 6 weeks.</p></div>
+      <div class="case-card"><strong>D2C Food Brand — 3X LTV</strong><p>Implemented lifecycle automation & retention systems, tripling customer lifetime value in 90 days.</p></div>
+      <div class="case-card"><strong>Multi-channel Retailer — 70% Fewer Stockouts</strong><p>Optimized inventory and marketplace sync, dramatically reducing out-of-stock occurrences and lost revenue.</p></div>
+    </div>
+  </section>
 
-      <h3>Founder / story</h3>
-      <p><strong>Orlando Pérez — Founder &amp; CEO.</strong> Full-stack dev, AI engineer, and growth operator with hands-on experience in e-commerce, Amazon/Walmart integrations, ad platforms, and automation. He built production-grade platforms, led growth &amp; ad campaigns, and scaled cross-border commerce operations before founding Eternity.</p>
+  <section id="faq" aria-labelledby="faq-title">
+    <h2 id="faq-title">FAQ</h2>
+    <dl class="faq">
+      <dt tabindex="0">What KPIs do you guarantee?</dt>
+      <dd>We set KPI targets together (ROAS, GMV, CAC, AOV). The contract defines measurement windows and payout rules.</dd>
+      <dt tabindex="0">How much of our team is involved?</dt>
+      <dd>Minimal — we need access to data and a point of contact. We own the execution; you approve strategy and budgets.</dd>
+      <dt tabindex="0">What if we’re not on Shopify?</dt>
+      <dd>We integrate with major platforms (Shopify, BigCommerce, Magento) and marketplaces (Amazon, Walmart, Mercado Libre). We’ll prepare a custom onboarding plan.</dd>
+      <dt tabindex="0">How long until we see results?</dt>
+      <dd>You’ll see meaningful signals within the first 2–3 weeks; full ramp and statistically significant results by day 45–60.</dd>
+    </dl>
+  </section>
 
-      <h3>Mission</h3>
-      <p>To give brands a predictable, tech-first engine for profitable growth and sustainable operations.</p>
+  <section id="contact" aria-labelledby="contact-title">
+    <h3 id="contact-title">Ready to scale? Let’s design your growth system.</h3>
+    <form aria-label="Growth Sprint Application Form">
+      <label for="company">Company name</label>
+      <input id="company" name="company" type="text" required />
+      <label for="website">Website</label>
+      <input id="website" name="website" type="url" placeholder="https://example.com" required />
+      <label for="revenue">Monthly revenue</label>
+      <input id="revenue" name="revenue" type="text" placeholder="$0 - $1,000,000+" required />
+      <label for="platforms">Platforms (Shopify / Amazon / others)</label>
+      <input id="platforms" name="platforms" type="text" placeholder="Shopify, Amazon, Walmart..." required />
+      <label for="contactName">Primary contact name</label>
+      <input id="contactName" name="contactName" type="text" required />
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" required />
+      <label for="phone">Phone</label>
+      <input id="phone" name="phone" type="tel" />
+      <label for="challenge">Short description of current challenge</label>
+      <textarea id="challenge" name="challenge" rows="4" required></textarea>
+      <button type="submit" class="cta">Apply for Growth Elevation</button>
+      <p class="small">We reply within 24 hours. Your data is secure and used only to evaluate fit.</p>
+    </form>
+  </section>
+</main>
 
-      <h3>Values</h3>
-      <ul class="features-list" aria-label="Company values">
-        <li>Product-first thinking</li>
-        <li>Ownership & measurable outcomes</li>
-        <li>Speed with discipline</li>
-        <li>Data privacy & transparency</li>
-      </ul>
-
-    </section>
-    <section id="faq" aria-labelledby="faq-title">
-  <h2 id="faq-title">FAQ</h2>
-  <dl class="faq">
-    <dt tabindex="0">What KPIs do you guarantee?</dt>
-    <dd>We set KPI targets together (ROAS, GMV, CAC, AOV). The contract defines measurement windows and payout rules.</dd>
-
-    <dt tabindex="0">How much of our team is involved?</dt>
-    <dd>Minimal — we need access to data and a point of contact. We own the execution; you approve strategy and budgets.</dd>
-
-    <dt tabindex="0">What if we’re not on Shopify?</dt>
-    <dd>We integrate with major platforms (Shopify, BigCommerce, Magento) and marketplaces (Amazon, Walmart, Mercado Libre). We’ll prepare a custom onboarding plan.</dd>
-
-    <dt tabindex="0">How long until we see results?</dt>
-    <dd>You’ll see meaningful signals within the first 2–3 weeks; full ramp and statistically significant results by day 45–60.</dd>
-  </dl>
-</section>
-<section id="contact" aria-labelledby="contact-title">
-  <h3 id="contact-title">Ready to scale? Let’s design your growth system.</h3>
-  <form aria-label="Growth Sprint Application Form">
-    <label for="company">Company name</label>
-    <input id="company" name="company" type="text" required />
-    <label for="website">Website</label>
-    <input id="website" name="website" type="url" placeholder="https://example.com" required />
-    <label for="revenue">Monthly revenue</label>
-    <input id="revenue" name="revenue" type="text" placeholder="$0 - $1,000,000+" required />
-    <label for="platforms">Platforms (Shopify / Amazon / others)</label>
-    <input id="platforms" name="platforms" type="text" placeholder="Shopify, Amazon, Walmart..." required />
-    <label for="contactName">Primary contact name</label>
-    <input id="contactName" name="contactName" type="text" required />
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" required />
-    <label for="phone">Phone</label>
-    <input id="phone" name="phone" type="tel" />
-    <label for="challenge">Short description of current challenge</label>
-    <textarea id="challenge" name="challenge" rows="4" required></textarea>
-    <button type="submit" class="cta">Apply for Growth Elevation</button>
-    <p class="small">We reply within 24 hours. Your data is secure and used only to evaluate fit.</p>
-  </form>
-</section>
-
-<section id="contactme">
-  <h3>Contact</h3>
-  <p class="small-muted">Email: <a href="mailto:orlandoperflo@gmail.com">orlandoperflo@gmail.com</a></p>
-  <p class="small-muted">Phone: +52 999 342 2063</p>
-</section>
 <footer>
   <div><strong>Eternity</strong> · AI-driven growth & commerce</div>
   <div>© Eternity — Built for ambitious brands · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
 </footer>
 
+<!-- TEMPLATES: preloaded for 0ms navigation -->
+<template id="tpl-real-estate">
+  <section class="re-hero">
+    <div class="eyebrow">Real Estate at Eternity</div>
+    <h2>Enterprise pipelines for brokerages, developers & REITs</h2>
+    <p class="sub-lead">More Leads. More Contracts. Faster Absorption.</p>
+    <p class="lead">Eternity is the growth engine behind elite real estate organizations. We don’t “run marketing”—we architect predictable revenue: qualified demand, booked tours, signed contracts, and stabilized assets. As a multi-billion-dollar partner, we bring board-level strategy, world-class creative, and deep engineering—delivered with absolute discretion.</p>
+    <div class="pills">
+      <span class="pill">Brokerages & top teams</span>
+      <span class="pill">Developers</span>
+      <span class="pill">REITs & funds</span>
+      <span class="pill">PropTech platforms</span>
+    </div>
+    <div style="margin-top:1rem;display:flex;gap:.75rem;flex-wrap:wrap;">
+      <a href="#/contact" data-scroll="#contact" class="cta">Request a private strategy session</a>
+      <a href="#/real-estate#pipeline" class="btn-ghost" data-anchor>See how the pipeline works</a>
+    </div>
+  </section>
+
+  <section>
+    <h3>Who we partner with</h3>
+    <p>Brokerages & top teams • Developers (pre-construction, lease-up, mixed-use, hospitality) • REITs & funds • PropTech platforms expanding adoption and market share</p>
+  </section>
+
+  <section>
+    <h3>Outcomes we own</h3>
+    <ul>
+      <li>Lead generation at scale: high-intent buyers/tenants, not vanity traffic</li>
+      <li>Sales acceleration: shorter cycles from first touch to signed agreement</li>
+      <li>Lower CAC, higher LTV via first-party data and server-side attribution</li>
+      <li>Consistent pipeline across markets, seasons, and product types</li>
+      <li>RevOps clarity: one truth from impression → tour → offer → closing/NOI</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>What we build for you (Strategy → Build → Operate)</h3>
+    <h4>Go-to-Market & Launch Architecture</h4>
+    <p>Positioning, audience design, territory strategy, media mix, broker activation, launch calendars.</p>
+    <h4>Performance Media & Demand Gen</h4>
+    <p>Meta, Google, TikTok, LinkedIn, Programmatic/CTV/DOOH with advanced CAPI/Pixel, audience graphing, creative testing—optimized for tours and contracts.</p>
+    <h4>Enterprise Websites, Portals & Listing Systems</h4>
+    <p>Headless, lightning-fast, IDX/MLS & RESO-ready; live availability, floor-plan search, waitlists, and unit-level analytics with embedded lead capture.</p>
+    <h4>AI Sales Agents (24/7, EN/ES)</h4>
+    <p>WhatsApp/SMS/chat/voice: instant response, qualification, neighborhood Q&A, financing pre-checks, calendar booking, reminders, and post-tour nurturing.</p>
+    <h4>CRM, CDP & Revenue Operations</h4>
+    <p>Salesforce, HubSpot, KVCore, BoomTown, or custom. Pipeline design, scoring models, SLAs, compensation logic, and audit-proof attribution.</p>
+    <h4>Luxury Creative & Sales Enablement</h4>
+    <p>Film, photo, CGI/3D, virtual tours, launch books, sales-gallery systems—storytelling that commands premium and conversion.</p>
+    <h4>Data, Attribution & Intelligence</h4>
+    <p>Server-side tracking, MTA/MMM, cohort analysis, market heatmaps, and executive dashboards that tie media to offers, contracts, and NOI.</p>
+    <h4>Marketplaces & Syndication</h4>
+    <p>Listing optimization, data hygiene, international buyer funnels, and broker-of-record partnerships without channel conflict.</p>
+    <h4>Reputation, Local SEO & Maps</h4>
+    <p>Review engines, GMB/Maps dominance, and neighborhood content capturing “near me” + relocation intent.</p>
+  </section>
+
+  <section id="pipeline">
+    <h3>Specialized programs</h3>
+    <h4>Developers (Pre-Construction & Lease-Up)</h4>
+    <p>Absorption playbooks from teaser to sell-out/stabilization; VIP funnels, allocation mechanics, price-tier and floor-plan demand modeling.</p>
+    <h4>Brokerages & Top Teams</h4>
+    <p>Territory exclusivity, agent growth OS, appointment setting, hot-sheet alerts; luxury listing accelerators that turn attention into booked tours.</p>
+    <h4>REITs & Portfolios</h4>
+    <p>Centralized demand hub, property scorecards, roll-up dashboards; tenant-mix strategy, commercial pre-leasing, renewals/remarketing to resident base.</p>
+    <h4>PropTech</h4>
+    <p>Acquisition → activation → retention frameworks, marketplace liquidity, and enterprise sales enablement.</p>
+  </section>
+
+  <section>
+    <h3>How success feels</h3>
+    <ul>
+      <li>Calendars auto-fill with qualified showings</li>
+      <li>Sales cycles compress from months to weeks</li>
+      <li>Agents focus on hot conversations, not chasing leads</li>
+      <li>Markets are won with share and velocity, not spend alone</li>
+      <li>Every dollar ties to revenue, occupancy, and NOI</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>Why Eternity</h3>
+    <ul>
+      <li>AI-native, enterprise-grade architecture—bots aren’t bolted on; they’re designed into your stack</li>
+      <li>Bespoke & discreet: limited partners per category/market, white-glove delivery</li>
+      <li>Global reach with local nuance across North America, Europe, and LATAM</li>
+      <li>Full accountability: Strategy + Build + Operate under one roof—outcomes over outputs</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>Security & Compliance</h3>
+    <p>Minimal-access principles, PII safeguards, consent & preference management, encryption at rest/in transit, and audit-ready logging. Your data. Your rules.</p>
+  </section>
+
+  <section>
+    <h3>Engagement models</h3>
+    <ul>
+      <li><strong>Growth Elevation (flagship):</strong> strategy, build, and 90-day lift-off to pipeline certainty</li>
+      <li><strong>Managed Growth Partner:</strong> ongoing operate/optimize with executive dashboards</li>
+      <li><strong>Data & Platform:</strong> CRM/CDP, analytics, attribution, and AI agent rollout</li>
+      <li><strong>Launch & Lease-Up:</strong> end-to-end for new developments and repositionings</li>
+    </ul>
+  </section>
+
+
+
+  <section>
+    <h3>Request a consultation</h3>
+    <form aria-label="Real Estate — Strategy Session">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
+        <div>
+          <label for="re_name">Name</label>
+          <input id="re_name" name="name" type="text" required />
+        </div>
+        <div>
+          <label for="re_company">Company</label>
+          <input id="re_company" name="company" type="text" required />
+        </div>
+        <div>
+          <label for="re_role">Role</label>
+          <input id="re_role" name="role" type="text" />
+        </div>
+        <div>
+          <label for="re_markets">Markets</label>
+          <input id="re_markets" name="markets" type="text" placeholder="NYC, CDMX, Madrid…" />
+        </div>
+        <div>
+          <label for="re_portfolio">Portfolio size</label>
+          <input id="re_portfolio" name="portfolio" type="text" placeholder="Units / listings / AUM" />
+        </div>
+        <div>
+          <label for="re_objective">Primary objective</label>
+          <input id="re_objective" name="objective" type="text" placeholder="e.g., lease-up in 90 days" />
+        </div>
+        <div>
+          <label for="re_timeline">Timeline</label>
+          <input id="re_timeline" name="timeline" type="text" placeholder="e.g., start in 2 weeks" />
+        </div>
+        <div>
+          <label for="re_email">Email</label>
+          <input id="re_email" name="email" type="email" required />
+        </div>
+        <div>
+          <label for="re_phone">Phone</label>
+          <input id="re_phone" name="phone" type="tel" />
+        </div>
+      </div>
+      <button type="submit" class="cta">Request a private strategy session</button>
+      <p class="small-muted">We reply within 24 hours. Discreet, audit-ready process.</p>
+    </form>
+  </section>
+</template>
+
 <script>
-  // Mobile nav toggle
+  // ------- Mobile nav toggle -------
   document.getElementById('nav-toggle').addEventListener('click', function() {
     document.getElementById('nav').classList.toggle('active');
   });
 
-  // FAQ toggle
-document.querySelectorAll('.faq dt').forEach(dt => {
-  dt.addEventListener('click', () => {
-    dt.classList.toggle('active');
-    const dd = dt.nextElementSibling;
-    if (dd.style.display === 'block') {
-      dd.style.display = 'none';
-    } else {
-      dd.style.display = 'block';
+  // ------- FAQ toggle (delegated) -------
+  document.addEventListener('click', function(e){
+    if(e.target.matches('.faq dt')){
+      const dt = e.target; dt.classList.toggle('active');
+      const dd = dt.nextElementSibling; if(!dd) return; dd.style.display = dd.style.display === 'block' ? 'none' : 'block';
     }
   });
-});
-</script>
 
+  // ------- Tiny Router (hash-based for 0ms nav + real back button) -------
+  const app = document.getElementById('app');
+  const HOME_HTML = app.innerHTML; // snapshot current DOM as Home template
+  const TPLS = {
+    'home': () => HOME_HTML,
+    'real-estate': () => document.getElementById('tpl-real-estate').innerHTML
+  };
+
+  function setActiveNav(route){
+    document.querySelectorAll('nav a[data-route]').forEach(a=>a.classList.remove('active'));
+    const selector = route === 'home' ? 'a[href="#/"]' : `a[href="#/${route}"]`;
+    const link = document.querySelector(`nav ${selector}`);
+    if(link) link.classList.add('active');
+  }
+
+  function render(route){
+    const tpl = TPLS[route] || TPLS['home'];
+    app.innerHTML = tpl();
+    setActiveNav(route);
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    document.title = route === 'real-estate' ? 'Eternity — Real Estate' : 'Eternity — Growth Elevation';
+  }
+
+  function parseRoute(){
+    const hash = location.hash || '#/';
+    const parts = hash.replace(/^#\//,'').split('#')[0].split('?')[0];
+    return parts && parts.length ? parts : '';
+  }
+
+  function navigate(route){
+    if(route === 'real-estate') {
+      history.pushState({route}, '', '#/real-estate');
+      render('real-estate');
+    } else {
+      history.pushState({route:'home'}, '', '#/');
+      render('home');
+    }
+  }
+
+  // Intercept nav clicks
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a');
+    if(!a) return;
+
+    // SPA route links
+    if(a.hasAttribute('data-route')){
+      e.preventDefault();
+      const href = a.getAttribute('href');
+      const route = href.includes('real-estate') ? 'real-estate' : 'home';
+      navigate(route);
+      return;
+    }
+
+    // In-page scroll targets (work both on Home and RE where relevant)
+    if(a.hasAttribute('data-scroll')){
+      e.preventDefault();
+      const target = a.getAttribute('data-scroll');
+      // Ensure we are on home for these anchors
+      if(parseRoute() !== '') { render('home'); }
+      requestAnimationFrame(()=>{
+        const el = document.querySelector(target);
+        if(el) el.scrollIntoView({behavior:'smooth'});
+      });
+    }
+
+    // Same-page anchors inside RE template
+    if(a.hasAttribute('data-anchor')){
+      e.preventDefault();
+      // already on RE; just scroll after a tick
+      requestAnimationFrame(()=>{
+        const id = a.getAttribute('href').split('#')[1];
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth'});
+      });
+    }
+  });
+
+  // Back/forward support
+  window.addEventListener('popstate', ()=>{
+    const route = parseRoute();
+    render(route === 'real-estate' ? 'real-estate' : 'home');
+  });
+
+  // Initial render
+  render(parseRoute());
+</script>
 </body>
 </html>
